@@ -1,10 +1,14 @@
 import {useEffect, useState} from "react";
 import SachModel from "../../models/SachModel";
-import {lay3SachMoiNhat, layToanBoSach} from "../../api/SachAPI";
+import {lay3SachMoiNhat, layToanBoSach, timKiemSach} from "../../api/SachAPI";
 import SachProps from "./components/SachProps";
 import {PhanTrang} from "../../utils/PhanTrang";
 
-const DanhSachSanPham: React.FC = () => {
+interface DanhSachSanPhamProps{
+    tuKhoaTimKiem: string;
+}
+
+function DanhSachSanPham({tuKhoaTimKiem}: DanhSachSanPhamProps){
 
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
@@ -14,6 +18,7 @@ const DanhSachSanPham: React.FC = () => {
     const [tongSoSach, setSoSach] = useState(0);
 
     useEffect(() => {
+        if (tuKhoaTimKiem===''){
             layToanBoSach(trangHienTai-1).then(
                 kq =>{
                     setDanhSachQuyenSach(kq.ketQua);
@@ -26,7 +31,21 @@ const DanhSachSanPham: React.FC = () => {
                     setBaoLoi(error.message);
                 }
             );
-        }, [trangHienTai] // Chi goi mot lan
+        } else {
+            timKiemSach(tuKhoaTimKiem).then(
+                kq => {
+                    setDanhSachQuyenSach(kq.ketQua);
+                    setTongSoTrang(kq.tongSoTrang);
+                    setDangTaiDuLieu(false);
+                }
+            ).catch(
+                error => {
+                    setDangTaiDuLieu(false);
+                    setBaoLoi(error.message);
+                }
+            );
+        }
+        }, [trangHienTai, tuKhoaTimKiem] // Chi goi mot lan
     )
     const phanTrang = (trang: number) => {
         setTrangHienTai(trang);
@@ -44,6 +63,15 @@ const DanhSachSanPham: React.FC = () => {
         return (
             <div>
                 <h1>Gặp lỗi: {baoLoi}</h1>
+            </div>
+        );
+    }
+    if(danhSachQuyenSach.length===0){
+        return (
+            <div className="container">
+                <div className="d-flex align-items-center justify-content-center">
+                    <h1>Hiện không tìm thấy sách theo yêu cầu!</h1>
+                </div>
             </div>
         );
     }

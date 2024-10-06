@@ -55,3 +55,11 @@ export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
     return laySach(endpoint);
 
 }
+export async function timKiemSach(tuKhoaTimKiem: string): Promise<KetQuaInterface> {
+    let endpoint: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=0`;
+    if (tuKhoaTimKiem !== '') {
+        endpoint = `http://localhost:8080/sach/search/findByTenSachContaining?tenSach=${tuKhoaTimKiem}`;
+    }
+    //const
+    return laySach(endpoint);
+}

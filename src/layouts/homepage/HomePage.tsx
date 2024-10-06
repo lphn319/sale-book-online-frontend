@@ -3,12 +3,16 @@ import Banner from "./components/Banner";
 import Carousel from "./components/Carousel";
 import DanhSachSanPham from "../product/DanhSachSanPham";
 
-function HomePage(){
+interface HomePageProps{
+    tuKhoaTimKiem: string
+}
+
+function HomePage({tuKhoaTimKiem}: HomePageProps){
     return(
         <div>
             <Banner/>
             <Carousel/>
-            <DanhSachSanPham/>
+            <DanhSachSanPham tuKhoaTimKiem={tuKhoaTimKiem}/>
         </div>
     )
 }
