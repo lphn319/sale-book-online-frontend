@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from "react";
+import {Link} from "react-router-dom";
 interface NavbarProps{
     tuKhoaTimKiem: string;
     setTuKhoaTimKiem: (tuKhoa: string) => void;
@@ -23,7 +24,7 @@ function Navbar({tuKhoaTimKiem, setTuKhoaTimKiem}:NavbarProps){
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Bookstore</a>
+                <a className="navbar-brand" href="/">Bookstore</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -41,9 +42,9 @@ function Navbar({tuKhoaTimKiem, setTuKhoaTimKiem}:NavbarProps){
                                 Thể loại sách
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <li><a className="dropdown-item" href="#">Thể loại 1</a></li>
-                                <li><a className="dropdown-item" href="#">Thể loại 2</a></li>
-                                <li><a className="dropdown-item" href="#">Thể loại 3</a></li>
+                                <li><Link className="dropdown-item" to="/1">Thể loại 1</Link></li>
+                                <li><Link className="dropdown-item" to="/2">Thể loại 2</Link></li>
+                                <li><Link className="dropdown-item" to="/3">Thể loại 3</Link></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">

@@ -55,11 +55,15 @@ export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
     return laySach(endpoint);
 
 }
-export async function timKiemSach(tuKhoaTimKiem: string): Promise<KetQuaInterface> {
+export async function timKiemSach(tuKhoaTimKiem: string, maTheLoai: number): Promise<KetQuaInterface> {
     let endpoint: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=0`;
-    if (tuKhoaTimKiem !== '') {
+    if (tuKhoaTimKiem !== '' && maTheLoai==0) {
         endpoint = `http://localhost:8080/sach/search/findByTenSachContaining?tenSach=${tuKhoaTimKiem}`;
+    } else if (tuKhoaTimKiem ==='' && maTheLoai > 0) {
+        endpoint = `http://localhost:8080/sach/search/findByDanhSachTheLoai_MaTheLoai?maTheLoai=${maTheLoai}`
+    } else if (tuKhoaTimKiem !== '' && maTheLoai > 0) {
+        endpoint = `http://localhost:8080/sach/search/findByTenSachContainingAndDanhSachTheLoai_MaTheLoai?maTheLoai=${maTheLoai}&tenSach=${tuKhoaTimKiem}`
     }
-    //const
+
     return laySach(endpoint);
 }
