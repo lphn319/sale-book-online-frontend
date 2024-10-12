@@ -28,15 +28,15 @@ async function layAnhCuaMotSach(endpoint: string): Promise<HinhAnhModel[]> {
 
 export async function layToanBoAnhCuaMotSach(maSach: number): Promise<HinhAnhModel[]> {
     // Xác định endpoint
-    const duongDan: string = `http://localhost:8080/sach/${maSach}/danhSachHinhAnh`;
+    const endpoint: string = `http://localhost:8080/sach/${maSach}/danhSachHinhAnh`;
 
-    return layAnhCuaMotSach(duongDan);
+    return layAnhCuaMotSach(endpoint);
 }
 
 
 export async function lay1AnhCuaMotSach(maSach: number): Promise<HinhAnhModel[]> {
     // Xác định endpoint
-    const duongDan: string = `http://localhost:8080/sach/${maSach}/danhSachHinhAnh?sort=maHinhAnh,asc&page=0&size=1`;
+    const endpoint: string = `http://localhost:8080/sach/${maSach}/danhSachHinhAnh?sort=maHinhAnh,asc&page=0&size=1`;
 
-    return layAnhCuaMotSach(duongDan);
+    return layAnhCuaMotSach(endpoint);
 }
