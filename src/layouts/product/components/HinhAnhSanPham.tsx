@@ -39,8 +39,6 @@ const HinhAnhSanPham: React.FC<HinhAnhSanPham> = (props) => {
         }, [] // Chi goi mot lan
     )
 
-
-
     // console.log(danhSachAnh.length);
 
     if (dangTaiDuLieu) {
@@ -66,7 +64,7 @@ const HinhAnhSanPham: React.FC<HinhAnhSanPham> = (props) => {
                     {
                         danhSachAnh.map((hinhAnh, index) => (
                             <div key={index}>
-                                <img src={hinhAnh.duLieuAnh} alt={hinhAnh.tenHinhAnh} style={{maxWidth:"250px"}}/>
+                                <img src={hinhAnh.duLieuAnh} alt={hinhAnh.tenHinhAnh} style={{maxWidth:"256px", maxHeight: "512px"}}/>
                             </div>
                         ))
                     }

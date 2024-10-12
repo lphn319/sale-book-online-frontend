@@ -6,6 +6,7 @@ import HomePage from "./layouts/homepage/HomePage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import About from "./layouts/about/About";
 import ChiTietSanPham from "./layouts/product/ChiTietSanPham";
+import DangKyTaiKhoan from "./layouts/user/DangKyTaiKhoan";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                     <Route path='/:maTheLoai' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/sach/:maSach' element={<ChiTietSanPham />} />
+                    <Route path='dang-ky' element={<DangKyTaiKhoan/>} />
                 </Routes>
                 <Footer/>
             </div>

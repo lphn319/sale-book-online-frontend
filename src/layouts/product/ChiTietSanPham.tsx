@@ -6,6 +6,7 @@ import HinhAnhSanPham from "./components/HinhAnhSanPham";
 import DanhGiaSanPham from "./components/DanhGiaSanPham";
 import renderRating from "../../utils/XepHangSao";
 import dinhDangSo from "../../utils/DinhDangSo";
+import Carousel from "../homepage/components/Carousel";
 
 
 
@@ -142,6 +143,9 @@ const ChiTietSanPham: React.FC = () => {
                                         style={{width: '100%'}}>Thêm vào danh sách yêu thích</button>
                             </div>
 
+                            {/*<div>*/}
+                            {/*    <Carousel/>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                 </div>
