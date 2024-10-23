@@ -56,7 +56,9 @@ function DangKyTaiKhoan(){
                             hoDem: hoDem,
                             ten: ten,
                             soDienThoai: soDienThoai,
-                            gioiTinh: gioiTinh
+                            gioiTinh: gioiTinh,
+                            daKichHoat: 0,
+                            maKichHoat: ""
                         })
                     }
                 );
@@ -73,7 +75,7 @@ function DangKyTaiKhoan(){
                 setThongBao("Đã xảy ra lỗi trong quá trình đăng ký tài khoản.")
             }
         } else {
-            setThongBao("Vui lòng nhập đầy đủ thông tin để hoàn tất việc đăng kí tài khoản!!!")
+            setThongBao("Vui lòng nhập thông tin hợp lệ để hoàn tất việc đăng kí tài khoản!!!")
         }
     }
     //Kiem tra ten dang nhap
@@ -315,5 +317,4 @@ function DangKyTaiKhoan(){
         </div>
     );
 }
-
 export default DangKyTaiKhoan;

@@ -63,7 +63,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                         src={duLieuAnh}
                         className="card-img-top"
                         alt={props.sach.tenSach}
-                        style={{ height: '200px' }}
+                        style={{ height: '2', width: '1' }}
                     />
                 </Link>
                 <div className="card-body">

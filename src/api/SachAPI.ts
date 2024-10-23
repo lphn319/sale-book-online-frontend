@@ -101,4 +101,29 @@ export async function laySachTheoMaSach(maSach: number): Promise<SachModel|null>
         console.error("Error", error);
         return null;
     }
+
+
+
+}
+
+export async function laySachBangMaGioHang(maGioHang: number): Promise<SachModel | null> {
+    const endpoint =`http://localhost:8080/chi-tiet-gio-hang/${maGioHang}/sach`;
+
+    try {
+        // Gọi phương thức request()
+        const response = await request(endpoint);
+
+        // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
+        if (response) {
+
+            // Trả về quyển sách
+            return response;
+        } else {
+            throw new Error("Sách không tồn tại");
+        }
+
+    } catch (error) {
+        console.error('Error: ', error);
+        return null;
+    }
 }

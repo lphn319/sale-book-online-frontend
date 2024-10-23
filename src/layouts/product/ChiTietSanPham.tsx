@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from "react";
 import SachModel from "../../models/SachModel";
 import {useParams} from "react-router-dom";
+import { toast } from "react-toastify";
 import {laySachTheoMaSach} from "../../api/SachAPI";
 import HinhAnhSanPham from "./components/HinhAnhSanPham";
 import DanhGiaSanPham from "./components/DanhGiaSanPham";
 import renderRating from "../../utils/XepHangSao";
 import dinhDangSo from "../../utils/DinhDangSo";
-import Carousel from "../homepage/components/Carousel";
-
+import TheLoaiModel from "../../models/TheLoaiModel";
+import {layTheLoaiBangMaSach} from "../../api/TheLoaiAPI";
+import {useChiTietGioHang} from "../../utils/ChiTietGioHangContext";
+import {getIdUserByToken, isToken} from "../../utils/JwtService";
 
 
 const ChiTietSanPham: React.FC = () => {
+    const {setTatCaGioHang, danhSachGioHang} = useChiTietGioHang();
+
     // Lấy mã sách từ URL
     const { maSach } = useParams();
 
@@ -48,8 +53,118 @@ const ChiTietSanPham: React.FC = () => {
             setSoLuong(soLuongMoi);
         }
     }
+
+    //Xu ly mua ngay
     const handleMuaNgay = () => {}
-    const handleThemVaoGioHang = () => {}
+
+    // Xử lý thêm sản phẩm vào giỏ hàng
+    const handleThemVaoGioHang = async (sachMoi: SachModel) => {
+        console.log("Sản phẩm đang thêm vào giỏ hàng: ", sachMoi);
+
+        let isExistBook = danhSachGioHang.find(
+            (cartItem) => Number(cartItem.sach.maSach) === Number(sachMoi.maSach)
+        );
+
+        console.log("Sản phẩm đã có trong giỏ hàng: ", isExistBook);
+
+        if (isExistBook) {
+            isExistBook.soLuong += soLuong;
+
+            if (isToken()) {
+                const request = {
+                    maGioHang: isExistBook.maChiTietGioHang,
+                    soLuong: isExistBook.soLuong,
+                };
+                const token = localStorage.getItem("token");
+
+                // Log token lấy từ localStorage
+                console.log("Token lấy từ localStorage: ", token);
+
+                try {
+                    const response = await fetch("http://localhost:8080/chi-tiet-gio-hang/cap-nhat-san-pham", {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "content-type": "application/json",
+                        },
+                        body: JSON.stringify(request),
+                    });
+
+                    if (!response.ok) {
+                        console.error("Cập nhật số lượng thất bại", await response.text());
+                        toast.error("Cập nhật sản phẩm trong giỏ hàng thất bại.");
+                    }
+                } catch (err) {
+                    console.error("Cập nhật số lượng thất bại", err);
+                    toast.error("Lỗi hệ thống khi cập nhật giỏ hàng.");
+                }
+            }
+        } else {
+            const newCartItem = {
+                soLuong: soLuong,
+                sach: sachMoi,
+                maGioHang: 0,
+            };
+
+            const maNguoiDung = getIdUserByToken();
+            console.log("Mã người dùng lấy từ token: ", maNguoiDung);
+
+            if (isToken()) {
+                try {
+                    const request = [{
+                        soLuong: soLuong,
+                        sach: sachMoi,
+                        maNguoiDung: maNguoiDung, // Sử dụng biến đã lưu
+                    }];
+
+                    // Log để kiểm tra payload trước khi gửi
+                    console.log("Payload request gửi lên API: ", request);
+
+                    const token = localStorage.getItem("token");
+
+                    // Log token kiểm tra trước khi gửi request
+                    console.log("Token trước khi gửi request: ", token);
+
+                    const response = await fetch("http://localhost:8080/chi-tiet-gio-hang/them-san-pham", {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "content-type": "application/json",
+                        },
+                        body: JSON.stringify(request),
+                    });
+
+                    if (response.ok) {
+                        const maGioHang = await response.json();
+                        if (maGioHang) {
+                            newCartItem.maGioHang = maGioHang;
+                            danhSachGioHang.push(newCartItem);
+                        } else {
+                            console.error("Không nhận được mã giỏ hàng từ server.");
+                            toast.error("Thêm sản phẩm vào giỏ hàng thất bại.");
+                        }
+                    } else {
+                        console.error("Thêm sản phẩm vào DB thất bại", await response.text());
+                        toast.error("Thêm sản phẩm vào giỏ hàng thất bại.");
+                    }
+                } catch (error) {
+                    console.log("Thêm sản phẩm vào DB thất bại", error);
+                    toast.error("Lỗi hệ thống khi thêm vào giỏ hàng.");
+                }
+            } else {
+                danhSachGioHang.push(newCartItem);
+            }
+        }
+
+        localStorage.setItem("gioHang", JSON.stringify(danhSachGioHang));
+        console.log("Giỏ hàng sau khi lưu vào localStorage: ", danhSachGioHang);
+
+        toast.success("Thêm vào giỏ hàng thành công");
+        setTatCaGioHang(danhSachGioHang.length);
+    };
+
+
+
     const handleThemVaoDanhSachYeuThich = () => {}
 
     useEffect(() => {
@@ -65,6 +180,15 @@ const ChiTietSanPham: React.FC = () => {
                 })
         }, [maSach]
     )
+
+    //Lay ra the loai cua sach
+    const [theLoai, setTheLoai] = useState<TheLoaiModel[] | null>(null);
+    useEffect(() => {
+        layTheLoaiBangMaSach(maSachNumber)
+            .then((response) => {
+                setTheLoai(response.danhSachTheLoai);
+            });
+    }, [maSachNumber]);
 
     if (dangTaiDuLieu) {
         return (
@@ -103,6 +227,23 @@ const ChiTietSanPham: React.FC = () => {
                             <h1>{sach.tenSach}</h1>
                             <h4>{renderRating(sach.trungBinhXepHang?sach.trungBinhXepHang:0)}</h4>
                             <h4>{dinhDangSo(sach.giaBan)} VND</h4>
+
+                            {/* Hiển thị danh sách thể loại */}
+                            <div className="mt-3">
+                                <strong>Thể loại:</strong>
+                                {theLoai?.length ? (
+                                    <ul>
+                                        {theLoai.map((item, index) => (
+                                            <li key={item.maTheLoai || index}>
+                                                {item.tenTheLoai}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>Không có thể loại nào cho cuốn sách này.</p>
+                                )}
+                            </div>
+
                             <hr/>
                             <div dangerouslySetInnerHTML={{__html: (sach.moTa+'')}}/>
                             <hr/>
@@ -136,7 +277,7 @@ const ChiTietSanPham: React.FC = () => {
                                         onClick={handleMuaNgay}
                                         style={{width: '100%'}}>Mua ngay</button>
                                 <button type="button" className="btn btn-outline-secondary mt-2"
-                                        onClick={handleThemVaoGioHang}
+                                        onClick={() => handleThemVaoGioHang(sach)}
                                         style={{width: '100%'}}>Thêm vào giỏ hàng</button>
                                 <button type="button" className="btn btn-outline-secondary mt-2"
                                         onClick={handleThemVaoDanhSachYeuThich}
