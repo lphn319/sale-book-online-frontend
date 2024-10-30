@@ -9,6 +9,7 @@ function DangKyTaiKhoan(){
     const [matKhau, setMatKhau] = useState("");
     const [matKhauLapLai, setMatKhauLapLai] = useState("");
     const [gioiTinh, setGioiTinh] = useState('');
+    const [avatar, setAvatar] = useState<File|null>(null);
 
     // Các biến báo lỗi
     const [errorTenDangNhap, setErrorTenDangNhap] = useState("");
@@ -19,6 +20,16 @@ function DangKyTaiKhoan(){
     const [errorTen, setErrorTen] = useState("");
     const [errorSoDienThoai, setErrorSoDienThoai] = useState("");
     const [thongBao, setThongBao] = useState("");
+
+    // Convert file to Base64
+    const getBase64 = (file: File): Promise<string | null> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result ? (reader.result as string) : null);
+            reader.onerror = (error) => reject(error);
+        });
+    };
 
     //Dang ki tai khoan
     const handleSubmit = async (e: React.FormEvent) => {
@@ -40,7 +51,12 @@ function DangKyTaiKhoan(){
         const isTenValid = ten.trim() !== '';
 
         // Kiểm tra tất cả các điều kiện
-        if (isTenDangNhapValid && isEmailValid && isMatKhauValid && isMatKhauLapLaiValid && isTenValid && isHoDemValid) {
+        if (isTenDangNhapValid && isEmailValid && isMatKhauValid
+                    && isMatKhauLapLaiValid && isTenValid && isHoDemValid) {
+
+            const base64Avatar = avatar ? await getBase64(avatar) : null;
+            console.log("avatar: " + base64Avatar);
+
             try {
                 const url = 'http://localhost:8080/tai-khoan/dang-ky';
 
@@ -58,7 +74,8 @@ function DangKyTaiKhoan(){
                             soDienThoai: soDienThoai,
                             gioiTinh: gioiTinh,
                             daKichHoat: 0,
-                            maKichHoat: ""
+                            maKichHoat: "",
+                            avatar: base64Avatar
                         })
                     }
                 );
@@ -209,6 +226,13 @@ function DangKyTaiKhoan(){
         setGioiTinh(genderValue);
         console.log("Giới tính đã chọn:", genderValue);
     }
+    //Xu li thay doi file
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>)=> {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setAvatar(file);
+        }
+    };
 
     return(
         <div className="container">
@@ -308,6 +332,18 @@ function DangKyTaiKhoan(){
                         </select>
                     </div>
 
+                    <div className="mb-3">
+                        <label htmlFor="avatar" className="form-label">Ảnh đại diện</label>
+                        <input
+                            type="file"
+                            id="avatar"
+                            className="form-control"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                        />
+                        <div style={{color: "red"}}>{errorSoDienThoai}</div>
+                    </div>
+
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary">Đăng Ký</button>
                         <div style={{color: "green"}}>{thongBao}</div>
@@ -317,4 +353,5 @@ function DangKyTaiKhoan(){
         </div>
     );
 }
+
 export default DangKyTaiKhoan;

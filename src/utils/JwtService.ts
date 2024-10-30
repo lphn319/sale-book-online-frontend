@@ -62,16 +62,16 @@ export function getIdUserByToken() {
 }
 
 
-export function getRoleByToken() {
-    const token = localStorage.getItem('token');
-    if (token) {
-        const decodedToken = jwtDecode(token) as JwtPayload;
-        return decodedToken.role;
-    }
-}
+// export function getRoleByToken() {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//         const decodedToken = jwtDecode(token) as JwtPayload;
+//         return decodedToken.role;
+//     }
+// }
 
 export function logout(navigate: any) {
-    navigate("/login");
+    navigate("/dang-nhap");
     localStorage.removeItem('token');
     localStorage.removeItem('cart');
 }

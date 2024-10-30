@@ -15,25 +15,37 @@ export async function request(endpoint: string) {
 export async function requestAdmin(endpoint: string) {
     const token = localStorage.getItem("token");
 
+    // Kiểm tra token tồn tại và còn hiệu lực
     if (!token) {
-        return;
-    }
-    if (!isTokenExpired(token)) {
-        return;
-    }
-    // Truy cập đến đường dẫn
-    const response = await fetch(endpoint, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    // Thất bại
-    if (!response.ok) {
-        throw new Error(`Không thể truy cập ${endpoint}`);
+        console.warn("Không tìm thấy token trong localStorage.");
+        return null;
     }
 
-    // Thành công
-    return response.json();
+    if (isTokenExpired(token)) {
+        console.warn("Token đã hết hạn.");
+        return null;
+    }
+
+    try {
+        // Thực hiện yêu cầu API
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        // Kiểm tra phản hồi có thành công hay không
+        if (!response.ok) {
+            console.error(`Không thể truy cập ${endpoint} - Mã lỗi: ${response.status}`);
+            return null;
+        }
+
+        // Trả về dữ liệu JSON nếu yêu cầu thành công
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+        return null;
+    }
 }

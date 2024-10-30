@@ -4,10 +4,11 @@ import { jwtDecode } from "jwt-decode";
 
 export interface JwtPayload {
     id: number;
-    role: string;
+    // role: string;
     avatar: string;
     lastName: string;
     enabled: boolean;
+    isAdmin: boolean;
 }
 
 const RequireAdmin = <P extends object>(
@@ -21,18 +22,22 @@ const RequireAdmin = <P extends object>(
 
             // Nếu chưa đăng nhập thì về trang /login
             if (!token) {
-                navigate("/login");
+                navigate("/dang-nhap");
                 return;
             }
 
             // Giải mã token
             const decodedToken = jwtDecode(token) as JwtPayload;
+            console.log("Token đã giải mã:", decodedToken);
+
 
             // Lấy thông tin từ token đó
-            const role = decodedToken.role;
+            // const role = decodedToken.role;
+            // console.log("Role của người dùng:", role);
+
 
             // Kiểm tra quyền
-            if (role !== "ADMIN") {
+            if (!decodedToken.isAdmin) {
                 navigate("/error-403");
             }
         }, [navigate]);

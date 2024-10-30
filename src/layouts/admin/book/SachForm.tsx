@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import RequireAdmin from "./RequireAdmin";
+import RequireAdmin from "../RequireAdmin";
 
 const SachForm: React.FC = () => {
     const [sach, setSach] = useState({

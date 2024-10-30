@@ -8,8 +8,8 @@ const DangNhap = () => {
     const navigate = useNavigate();
 
 
-    const handleLogin = () => {
-        const loginRequest = {
+    const handleDangNhap = () => {
+        const dangNhapRequest = {
             username: username,
             password: password
         };
@@ -20,7 +20,7 @@ const DangNhap = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(loginRequest)
+                body: JSON.stringify(dangNhapRequest)
             }
         ).then(
             (response) => {
@@ -52,12 +52,12 @@ const DangNhap = () => {
             <div className="form-signin">
                 <h1 className="h3 mb-3 font-weight-normal">Đăng nhập</h1>
                 <label className="sr-only">Tên đăng nhập</label>
-                <input type="username" id="username" className="form-control mb-2" placeholder="Email address"
+                <input type="username" id="username" className="form-control mb-2" placeholder="Tên đăng nhập"
                        value={username}
                        onChange={(e) => setUsername(e.target.value)}
                 />
                 <label className="sr-only">Password</label>
-                <input type="password" id="inputPassword" className="form-control mb-2" placeholder="Password" required
+                <input type="password" id="inputPassword" className="form-control mb-2" placeholder="Mật khẩu" required
                        value={password}
                        onChange={(e) => setPassword(e.target.value)}
                 />
@@ -67,7 +67,7 @@ const DangNhap = () => {
                     </label>
                 </div>
                 <button className="btn btn-lg btn-primary btn-block" type="button"
-                        onClick={handleLogin}
+                        onClick={handleDangNhap}
                 >Đăng nhập</button>
                 {error && <div style={{ color: 'red' }}>{error}</div>}
             </div>
