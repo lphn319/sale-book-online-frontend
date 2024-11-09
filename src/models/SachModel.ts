@@ -1,4 +1,7 @@
+import TheLoaiModel from "./TheLoaiModel";
+
 class SachModel {
+    id?:any;
     maSach: number;
     tenSach?: string; // có thể bị NULL
     giaBan?: number;
@@ -6,7 +9,12 @@ class SachModel {
     moTa?:string;
     soLuong?: number;
     tenTacGia?:string;
+    isbn?: string;
     trungBinhXepHang?:number;
+    danhSachMaTheLoai?: number[];
+    danhSachTheLoai?: TheLoaiModel[];
+    relatedImg?: string[];
+    thumbnail?: string
 
     constructor(
         maSach: number,
@@ -16,7 +24,10 @@ class SachModel {
         moTa?:string,
         soLuong?: number,
         tenTacGia?:string,
+        isbn?: string,
         trungBinhXepHang?:number,
+        thumbnail?: string
+
     ){
         this.maSach= maSach;
         this.tenSach= tenSach;
@@ -25,7 +36,9 @@ class SachModel {
         this.moTa= moTa;
         this.soLuong= soLuong;
         this.tenTacGia= tenTacGia;
+        this.isbn = isbn;
         this.trungBinhXepHang= trungBinhXepHang;
+        this.thumbnail = thumbnail;
     }
 }
 export default SachModel;

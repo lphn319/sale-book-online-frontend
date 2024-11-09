@@ -1,19 +1,19 @@
-import { Button } from "@mui/material";
-import React, {useState} from "react";
-import {NguoiDungForm} from "./components/user/NguoiDungForm";
-import {FadeModal} from "../../utils/FadeModal";
+import Button from "@mui/material/Button";
+import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+
 import RequireAdmin from "./RequireAdmin";
-import {NguoiDungTable} from "./components/user/NguoiDungTable";
+import {TheLoaiTable} from "./components/genre/TheLoaiTable";
+import {FadeModal} from "../../utils/FadeModal";
+import {TheLoaiForm} from "./components/genre/TheLoaiForm";
+import "../../utils/style/TheLoai.css";
 
-function AddIcon() {
-    return null;
-}
 
-const QuanLyNguoiDung =() => {
+const QuanLyTheLoai = () => {
     // Tạo ra biến để mỗi khi thao tác CRUD thì sẽ update lại table
     const [keyCountReload, setKeyCountReload] = useState(0);
 
-    const [option, setOption] = useState(""); // Truyền vào là có thể là (them, cap-nhat)
+    const [option, setOption] = useState(""); // Truyền vào là có thể là (add, update, view)
     const [openModal, setOpenModal] = React.useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
@@ -29,37 +29,39 @@ const QuanLyNguoiDung =() => {
                         color='success'
                         onClick={() => {
                             handleOpenModal();
-                            setOption("them");
+                            setOption("add");
                         }}
                         startIcon={<AddIcon />}
                     >
-                        Thêm người dùng
+                        Thêm thể loại
                     </Button>
                 </div>
                 <div>
-                    <NguoiDungTable
+                    <TheLoaiTable
                         keyCountReload={keyCountReload}
                         setOption={setOption}
+                        setId={setId}
                         handleOpenModal={handleOpenModal}
                         setKeyCountReload={setKeyCountReload}
-                        setId={setId}
                     />
                 </div>
             </div>
+
             <FadeModal
                 open={openModal}
                 handleOpen={handleOpenModal}
                 handleClose={handleCloseModal}
             >
-                <NguoiDungForm
+                <TheLoaiForm
                     option={option}
-                    setKeyCountReload={setKeyCountReload}
                     id={id}
                     handleCloseModal={handleCloseModal}
+                    setKeyCountReload={setKeyCountReload}
                 />
             </FadeModal>
         </div>
     );
-}
-const QuanLyNguoiDungPage = RequireAdmin(QuanLyNguoiDung);
-export default QuanLyNguoiDungPage;
+};
+
+const QuanLyTheLoaiPage = RequireAdmin(QuanLyTheLoai);
+export default QuanLyTheLoaiPage;

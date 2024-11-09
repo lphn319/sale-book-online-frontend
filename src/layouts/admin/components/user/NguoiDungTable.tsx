@@ -1,10 +1,10 @@
 import {toast} from "react-toastify";
 import {useEffect, useState} from "react";
-import NguoiDungModel from "../../../models/NguoiDungModel";
+import NguoiDungModel from "../../../../models/NguoiDungModel";
 import {useConfirm} from "material-ui-confirm";
-import {layTatCaNguoiDungCoQuyen} from "../../../api/NguoiDungAPI";
+import {layTatCaNguoiDungCoQuyen} from "../../../../api/NguoiDungAPI";
 import {Box, Chip, CircularProgress, IconButton, Tooltip} from "@mui/material";
-import {DataTable} from "../../../utils/DataTable";
+import {DataTable} from "../../../../utils/DataTable";
 import {GridColDef} from "@mui/x-data-grid";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {DeleteOutlineOutlined} from "@mui/icons-material";

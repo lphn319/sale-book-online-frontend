@@ -1,19 +1,19 @@
-import { Button } from "@mui/material";
 import React, {useState} from "react";
-import {NguoiDungForm} from "./components/user/NguoiDungForm";
+import {Button} from "@mui/material";
 import {FadeModal} from "../../utils/FadeModal";
+import {SachTable} from "./components/book/SachTable";
 import RequireAdmin from "./RequireAdmin";
-import {NguoiDungTable} from "./components/user/NguoiDungTable";
+import {SachForm} from "./components/book/SachForm";
 
 function AddIcon() {
     return null;
 }
 
-const QuanLyNguoiDung =() => {
+const QuanLySach: React.FC = () => {
     // Tạo ra biến để mỗi khi thao tác CRUD thì sẽ update lại table
     const [keyCountReload, setKeyCountReload] = useState(0);
 
-    const [option, setOption] = useState(""); // Truyền vào là có thể là (them, cap-nhat)
+    const [option, setOption] = useState(""); // Truyền vào là có thể là (add, update, view)
     const [openModal, setOpenModal] = React.useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
@@ -33,16 +33,16 @@ const QuanLyNguoiDung =() => {
                         }}
                         startIcon={<AddIcon />}
                     >
-                        Thêm người dùng
+                        Thêm sách
                     </Button>
                 </div>
                 <div>
-                    <NguoiDungTable
+                    <SachTable
                         keyCountReload={keyCountReload}
                         setOption={setOption}
+                        setId={setId}
                         handleOpenModal={handleOpenModal}
                         setKeyCountReload={setKeyCountReload}
-                        setId={setId}
                     />
                 </div>
             </div>
@@ -51,15 +51,15 @@ const QuanLyNguoiDung =() => {
                 handleOpen={handleOpenModal}
                 handleClose={handleCloseModal}
             >
-                <NguoiDungForm
-                    option={option}
-                    setKeyCountReload={setKeyCountReload}
+                <SachForm
                     id={id}
                     handleCloseModal={handleCloseModal}
+                    option={option}
+                    setKeyCountReload={setKeyCountReload}
                 />
             </FadeModal>
         </div>
     );
-}
-const QuanLyNguoiDungPage = RequireAdmin(QuanLyNguoiDung);
-export default QuanLyNguoiDungPage;
+};
+const QuanLySachPage = RequireAdmin(QuanLySach);
+export default QuanLySachPage;

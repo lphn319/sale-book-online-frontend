@@ -1,8 +1,8 @@
-import NguoiDungModel from "../../../models/NguoiDungModel";
+import NguoiDungModel from "../../../../models/NguoiDungModel";
 import React, {FormEvent, useEffect, useState} from "react";
-import {layTatCaQuyen} from "../../../api/QuyenAPI";
-import QuyenModel from "../../../models/QuyenModel";
-import {lay1NguoiDung} from "../../../api/NguoiDungAPI";
+import {layTatCaQuyen} from "../../../../api/QuyenAPI";
+import QuyenModel from "../../../../models/QuyenModel";
+import {lay1NguoiDung} from "../../../../api/NguoiDungAPI";
 import {Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {CloudUpload} from "react-bootstrap-icons";
 import { LoadingButton } from "@mui/lab";
@@ -12,8 +12,8 @@ import {
     kiemTraEmailTonTai,
     kiemTraSoDienThoai,
     kiemTraTenDangNhapTonTai
-} from "../../../utils/Validation";
-import {getUsernameByToken} from "../../../utils/JwtService";
+} from "../../../../utils/Validation";
+import {getUsernameByToken} from "../../../../utils/JwtService";
 import {toast} from "react-toastify";
 
 interface NguoiDungFormProps{

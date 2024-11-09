@@ -81,3 +81,4 @@ export async function layNguoiDungBangMaDanhGia(maDanhGia: number): Promise<Nguo
     const endpoint: string = `http://localhost:8080/su-danh-gia/${maDanhGia}/nguoiDung`;
     return layNguoiDung(endpoint);
 }
+

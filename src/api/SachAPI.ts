@@ -1,7 +1,8 @@
-import React from "react";
 import SachModel from "../models/SachModel";
 import {request} from "./Request";
-import sachModel from "../models/SachModel";
+import {layToanBoAnhCuaMotSach} from "./HinhAnhAPI";
+import {layTheLoaiBangMaSach} from "./TheLoaiAPI";
+import TheLoaiModel from "../models/TheLoaiModel";
 
 interface KetQuaInterface{
     ketQua: SachModel[];
@@ -10,7 +11,7 @@ interface KetQuaInterface{
 }
 
 async function laySach(endpoint: string): Promise<KetQuaInterface>{
-    const ketQua: sachModel[] = [];
+    const ketQua: SachModel[] = []; // Thay vì 'sachModel[]'
 
     // Gọi phương thức request
     const response = await request(endpoint);
@@ -38,11 +39,11 @@ async function laySach(endpoint: string): Promise<KetQuaInterface>{
     return {ketQua: ketQua, tongSoSach: tongSoSach, tongSoTrang: tongSoTrang};
 }
 
-export async function layToanBoSach(trang: number): Promise<KetQuaInterface> {
+export async function layToanBoSach(size: number, trang: number): Promise<KetQuaInterface> {
     const ketQua: SachModel[] = [];
 
     // Xác định endpoint
-    const endpoint: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=${trang}`;
+    const endpoint: string = `http://localhost:8080/sach?sort=maSach,desc&size=${size}&page=${trang}`;
 
     return laySach(endpoint);
 }
@@ -118,6 +119,63 @@ export async function laySachBangMaGioHang(maGioHang: number): Promise<SachModel
 
             // Trả về quyển sách
             return response;
+        } else {
+            throw new Error("Sách không tồn tại");
+        }
+
+    } catch (error) {
+        console.error('Error: ', error);
+        return null;
+    }
+}
+
+export async function layToanBoThongTinSachTheoMaSach(maSach: number): Promise<SachModel | null> {
+    let sachResponse: SachModel = {
+        maSach: 0,
+        tenSach: "",
+        tenTacGia: "",
+        moTa: "",
+        giaNiemYet: NaN,
+        giaBan: NaN,
+        soLuong: NaN,
+        trungBinhXepHang: NaN,
+        isbn: "",
+        danhSachMaTheLoai: [],
+        danhSachTheLoai: [],
+        relatedImg: [],
+    }
+
+    try {
+        // Gọi phương thức request()
+        const response = await laySachTheoMaSach(maSach);
+        console.log("Dữ liệu API trả về:", response);
+
+
+        // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
+        if (response) {
+            // Lưu dữ liệu sách
+            sachResponse = response;
+
+            // Lấy tất cả hình ảnh của sách
+            const imagesList = await layToanBoAnhCuaMotSach(response.maSach);
+            let thumbnail = imagesList[0];
+            const relatedImg = imagesList.map((image) => {
+                // Sử dụng conditional (ternary) để trả về giá trị
+                return !image.laIcon ? image.duLieuAnh : null;
+            }).filter(Boolean); // Loại bỏ các giá trị null
+
+
+
+            sachResponse = { ...sachResponse, relatedImg: relatedImg as string[], thumbnail: thumbnail?.duLieuAnh };
+
+            // Lấy tất cả thể loại của sách
+            const danhSachTheLoai = await layTheLoaiBangMaSach(response.maSach);
+            danhSachTheLoai.danhSachTheLoai.forEach((theLoai) => {
+                const dataGenre: TheLoaiModel = { maTheLoai: theLoai.maTheLoai, tenTheLoai: theLoai.tenTheLoai };
+                sachResponse = { ...sachResponse, danhSachTheLoai: [...sachResponse.danhSachTheLoai || [], dataGenre] };
+            })
+
+            return sachResponse;
         } else {
             throw new Error("Sách không tồn tại");
         }

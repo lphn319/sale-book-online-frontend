@@ -21,7 +21,7 @@ function DanhSachSanPham({ tuKhoaTimKiem, maTheLoai }: DanhSachSanPhamProps) {
             setDangTaiDuLieu(true);
             try {
                 if (tuKhoaTimKiem === '' && maTheLoai === 0) {
-                    const kq = await layToanBoSach(trangHienTai - 1);
+                    const kq = await layToanBoSach(20, trangHienTai - 1);
                     setDanhSachQuyenSach(kq.ketQua);
                     setTongSoTrang(kq.tongSoTrang);
                 } else {
