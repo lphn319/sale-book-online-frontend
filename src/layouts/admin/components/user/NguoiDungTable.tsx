@@ -27,7 +27,7 @@ export const NguoiDungTable: React.FC<NguoiDungTableProps> = (props) => {
     function handleDeleteUser(maNguoiDung: any) {
         const token = localStorage.getItem("token");
         confirm({
-            title: "Xoá nguoi dung",
+            title: "Xoá người dùng",
             description: "Bạn chắc chắn xoá người dùng này chứ?",
             confirmationText: ["Xoá"],
             cancellationText: ["Huỷ"],
@@ -79,42 +79,37 @@ export const NguoiDungTable: React.FC<NguoiDungTableProps> = (props) => {
 
 
     const columns: GridColDef[] = [
-        { field: "maNguoiDung", headerName: "Mã người dùng", width: 50 },
-        { field: "tenDangNhap", headerName: "Tên đăng nhập", width: 120 },
+        { field: "maNguoiDung", headerName: "Mã", flex: 0.5 },
+        { field: "tenDangNhap", headerName: "Tên đăng nhập", flex: 2 },
         {
             field: "quyen",
             headerName: "Quyền",
-            width: 150,
+            flex: 2,
             renderCell: (params) => {
                 return (
                     <Chip
                         label={params.value}
                         color={params.value === "KHACH HANG" ? "success" : "error"}
-                        variant='outlined'
+                        variant="outlined"
                     />
                 );
             },
         },
-        { field: "ten", headerName: "Tên", width: 100 },
-        {
-            field: "ngaySinh",
-            headerName: "Ngày sinh",
-            width: 100,
-        },
-        { field: "email", headerName: "Email", width: 200 },
-        { field: "soDienThoai", headerName: "Số điện thoại", width: 120 },
-
+        { field: "ten", headerName: "Tên", flex: 1 },
+        { field: "ngaySinh", headerName: "Ngày sinh", flex: 2 },
+        { field: "email", headerName: "Email", flex: 3 },
+        { field: "soDienThoai", headerName: "Số điện thoại", flex: 2 },
         {
             field: "action",
             headerName: "Hành động",
-            width: 200,
+            flex: 2,
             type: "actions",
             renderCell: (item) => {
                 return (
                     <div>
                         <Tooltip title={"Chỉnh sửa"}>
                             <IconButton
-                                color='primary'
+                                color="primary"
                                 onClick={() => {
                                     props.setOption("cap-nhat");
                                     props.setId(item.id);
@@ -126,7 +121,7 @@ export const NguoiDungTable: React.FC<NguoiDungTableProps> = (props) => {
                         </Tooltip>
                         <Tooltip title={"Xoá"}>
                             <IconButton
-                                color='error'
+                                color="error"
                                 onClick={() => handleDeleteUser(item.id)}
                             >
                                 <DeleteOutlineOutlined />
@@ -137,6 +132,7 @@ export const NguoiDungTable: React.FC<NguoiDungTableProps> = (props) => {
             },
         },
     ];
+
 
     if (loading) {
         return (

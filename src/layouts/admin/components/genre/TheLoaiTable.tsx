@@ -8,7 +8,6 @@ import { useConfirm } from "material-ui-confirm";
 import { layToanBoTheLoai } from "../../../../api/TheLoaiAPI";
 import TheLoaiModel from "../../../../models/TheLoaiModel";
 import { DataTable } from "../../../../utils/DataTable";
-import "../../../../utils/style/TheLoai.css";
 
 interface GenreTableProps {
     setOption: any;
@@ -94,6 +93,7 @@ export const TheLoaiTable: React.FC<GenreTableProps> = (props) => {
                         <IconButton
                             color="error"
                             onClick={() => handleDeleteGenre(item.id)}
+
                         >
                             <DeleteOutlineOutlined />
                         </IconButton>

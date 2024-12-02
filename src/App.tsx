@@ -22,9 +22,12 @@ import QuanLyTheLoaiPage from "./layouts/admin/QuanLyTheLoai";
 import { DatHangThanhCong } from "./layouts/dathang/DatHangThanhCong";
 import QuanLiDonHang from "./layouts/user/QuanLiDonHang";
 import { ConfirmProvider } from "material-ui-confirm"; // Thêm ConfirmProvider
+import {getIdUserByToken} from "./utils/JwtService";
+import QuanLiDonHangPage from "./layouts/user/QuanLiDonHang";
 
 function App() {
     const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
+    const userId = getIdUserByToken() ?? 0; // Fallback to 0 if null
 
     return (
         <div className="App">
@@ -46,13 +49,16 @@ function App() {
                                 <Route path='/gio-hang' element={<GioHangPage />} />
                                 <Route path='/quen-mat-khau' element={<QuenMatKhau />} />
                                 <Route path='/quan-li-nguoi-dung' element={<QuanLyNguoiDungPage />} />
-                                <Route path='/quan-li-don-hang' element={<QuanLyDonHangPage />} />
+                                <Route path='/quan-ly-don-hang' element={<QuanLyDonHangPage />} />
                                 <Route path='/dashboard' element={<Dashboard />} />
                                 <Route path='/quan-li-sach' element={<QuanLySachPage />} />
                                 <Route path='/quan-li-the-loai' element={<QuanLyTheLoaiPage />} />
                                 <Route path='/dat-hang-thanh-cong' element={<DatHangThanhCong />} />
                                 {/* Uncomment and update userId once available */}
-                                {/*<Route path='/nguoi-dung/quan-li-don-hang' element={<QuanLiDonHang maNguoiDung={userId} />} />*/}
+                                <Route
+                                    path="/quan-li-don-hang"
+                                    element={<QuanLiDonHangPage maNguoiDung={userId} />}
+                                />
                             </Routes>
                             <Footer />
                         </ChiTietGioHangProvider>

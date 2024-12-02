@@ -1,0 +1,103 @@
+/* Định dạng chung */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Hộp chứa toàn bộ nội dung */
+.MuiBox-root {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 16px;
+}
+
+/* Tiêu đề lớn */
+.MuiTypography-h4 {
+    font-weight: bold;
+    color: #1976d2; /* Màu xanh dương chính */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Định dạng danh sách đơn hàng */
+.MuiBox-root > .MuiBox-root {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s ease;
+}
+
+.MuiBox-root > .MuiBox-root:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tiêu đề mã đơn hàng */
+.MuiTypography-h6 {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Thông tin đơn hàng */
+.MuiTypography-body1,
+.MuiTypography-body2 {
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+/* Chip trạng thái */
+.MuiChip-root {
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 16px;
+    padding: 4px 12px;
+}
+
+/* Tình trạng đơn hàng */
+.MuiChip-success {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.MuiChip-info {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+.MuiChip-warning {
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.MuiChip-error {
+    background-color: #f44336;
+    color: #fff;
+}
+
+/* Loading spinner */
+.MuiCircularProgress-root {
+    display: block;
+    margin: 20px auto;
+    color: #1976d2; /* Màu xanh dương */
+}
+
+/* Lỗi thông báo */
+.MuiTypography-colorError {
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Nội dung trống */
+.MuiTypography-body1 {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+}

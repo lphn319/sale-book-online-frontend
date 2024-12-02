@@ -62,13 +62,23 @@ export function getIdUserByToken() {
 }
 
 
-// export function getRoleByToken() {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//         const decodedToken = jwtDecode(token) as JwtPayload;
-//         return decodedToken.role;
-//     }
-// }
+export function getRoleByToken(): "user" | "admin" | null {
+    const token = localStorage.getItem("token");
+    if (token) {
+        try {
+            const decodedToken = jwtDecode(token) as JwtPayload & {
+                isUser?: boolean;
+                isAdmin?: boolean;
+            };
+
+            if (decodedToken.isAdmin) return "admin";
+            if (decodedToken.isUser) return "user";
+        } catch (error) {
+            console.error("Lỗi giải mã token:", error);
+        }
+    }
+    return null; // Trả về null nếu không tìm thấy role
+}
 
 export function logout(navigate: any) {
     navigate("/dang-nhap");

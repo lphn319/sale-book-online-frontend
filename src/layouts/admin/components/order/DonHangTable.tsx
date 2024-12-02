@@ -33,13 +33,13 @@ export const DonHangTable: React.FC<DonHangTableProps> = (props) => {
     }, [props.keyCountReload]);
 
     const columns: GridColDef[] = [
-        { field: "maDonHang", headerName: "ID", width: 80 },
-        { field: "hoTen", headerName: "TÊN KHÁCH HÀNG", width: 200 },
-        { field: "ngayTao", headerName: "NGÀY TẠO", width: 100 },
+        { field: "maDonHang", headerName: "ID", flex: 1 },
+        { field: "hoTen", headerName: "TÊN KHÁCH HÀNG", flex: 2 },
+        { field: "ngayTao", headerName: "NGÀY TẠO", flex: 1 },
         {
             field: "tongTien",
             headerName: "TỔNG TIỀN",
-            width: 120,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <>{Number.parseInt(params.value).toLocaleString("vi-vn")} đ</>
@@ -49,7 +49,7 @@ export const DonHangTable: React.FC<DonHangTableProps> = (props) => {
         {
             field: "trangThai",
             headerName: "TRẠNG THÁI",
-            width: 150,
+            flex: 2,
             renderCell: (params) => {
                 return (
                     <Chip
@@ -63,23 +63,23 @@ export const DonHangTable: React.FC<DonHangTableProps> = (props) => {
                                         ? "warning"
                                         : "error"
                         }
-                        variant='outlined'
+                        variant="outlined"
                     />
                 );
             },
         },
-        { field: "hinhThucThanhToan", headerName: "THANH TOÁN", width: 150 },
+        { field: "hinhThucThanhToan", headerName: "THANH TOÁN", flex: 2 },
         {
             field: "action",
             headerName: "HÀNH ĐỘNG",
-            width: 200,
+            flex: 2,
             type: "actions",
             renderCell: (item) => {
                 return (
                     <div>
                         <Tooltip title={"Xem chi tiết"}>
                             <IconButton
-                                color='secondary'
+                                color="secondary"
                                 onClick={() => {
                                     props.setOption("view");
                                     props.setId(item.id);
@@ -91,7 +91,7 @@ export const DonHangTable: React.FC<DonHangTableProps> = (props) => {
                         </Tooltip>
                         <Tooltip title={"Chỉnh sửa"}>
                             <IconButton
-                                color='primary'
+                                color="primary"
                                 onClick={() => {
                                     props.setOption("update");
                                     props.setId(item.id);
@@ -106,6 +106,7 @@ export const DonHangTable: React.FC<DonHangTableProps> = (props) => {
             },
         },
     ];
+
 
     if (loading) {
         return (

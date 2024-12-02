@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
             title: "Quản lý đơn hàng",
             description: "Xem và quản lý đơn hàng.",
             buttonText: "Xem đơn hàng",
-            route: "/quan-li-don-hang",
+            route: "/quan-ly-don-hang",
         },
         {
             title: "Quản lý thể loại",

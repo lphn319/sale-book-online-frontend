@@ -4,6 +4,7 @@ import { Search } from "react-bootstrap-icons";
 import TheLoaiModel from "../../models/TheLoaiModel";
 import { layToanBoTheLoai } from "../../api/TheLoaiAPI";
 import { useXacThuc } from "../../utils/XacThucContext";
+import {getRoleByToken} from "../../utils/JwtService";
 
 interface NavbarProps {
     tuKhoaTimKiem: string;
@@ -15,6 +16,8 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
     const [theLoaiList, setTheLoaiList] = useState<TheLoaiModel[]>([]);
     const { isLoggedIn, setLoggedIn } = useXacThuc();
     const navigate = useNavigate();
+
+    const userRole = getRoleByToken();
 
     useEffect(() => {
         const fetchTheLoai = async () => {
@@ -72,13 +75,14 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
                                 {theLoaiList.map((theLoai) => (
                                     <li key={theLoai.maTheLoai}>
-                                        <Link className="dropdown-item" to={`/${theLoai.maTheLoai}`}>{theLoai.tenTheLoai}</Link>
+                                        <Link className="dropdown-item"
+                                              to={`/${theLoai.maTheLoai}`}>{theLoai.tenTheLoai}</Link>
                                     </li>
                                 ))}
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Liên hệ</a>
+                            <a className="nav-link" href="/about">Liên hệ</a>
                         </li>
                     </ul>
                 </div>
@@ -87,19 +91,22 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
                     <input className="form-control me-2" type="search"
                            placeholder="Tìm kiếm" aria-label="Search"
                            onChange={onSearchInputChange} onKeyDown={handleKeyDown}
-                           value={tuKhoaTamThoi} />
+                           value={tuKhoaTamThoi}/>
                     <button className="btn btn-outline-success" type="button" onClick={handleSearch}>
-                        <Search />
+                        <Search/>
                     </button>
                 </div>
 
                 <ul className="navbar-nav me-1">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/gio-hang">
-                            <i className="fas fa-shopping-cart"></i>
-                        </Link>
-                    </li>
+                    {userRole !== "admin" && (
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/gio-hang">
+                                <i className="fas fa-shopping-cart"></i>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
+
 
                 <ul className="navbar-nav me-1">
                     <li className="nav-item dropdown">
@@ -116,8 +123,15 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
                             ) : (
                                 <>
                                     <li><Link className="dropdown-item" to="/account">Quản lý tài khoản</Link></li>
-                                    <li><Link className="dropdown-item" to="/quan-li-don-hang">Quản lý đơn hàng</Link></li>
-                                    <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
+                                    {userRole === "admin" ? (
+                                        <li><Link className="dropdown-item" to="/dashboard">Dashboard</Link></li>
+                                    ) : (
+                                        <li><Link className="dropdown-item" to="/quan-li-don-hang">Quản lý đơn
+                                            hàng</Link></li>
+                                    )}
+                                    <li>
+                                        <button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button>
+                                    </li>
                                 </>
                             )}
                         </ul>

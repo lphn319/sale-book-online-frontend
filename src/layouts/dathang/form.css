@@ -1,0 +1,105 @@
+/* Toàn bộ form */
+form {
+    margin: 20px auto;
+    max-width: 800px; /* Giới hạn chiều rộng của form */
+}
+
+/* Container chính */
+.container {
+    background-color: #ffffff; /* Nền trắng sạch sẽ */
+    border: 1px solid #ddd; /* Viền nhạt */
+    border-radius: 8px; /* Bo góc mềm mại */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+    padding: 10px; /* Khoảng cách bên trong */
+    margin-bottom: 10px; /* Khoảng cách giữa các section */
+}
+
+/* Tiêu đề trong container */
+.container strong {
+    color: #333; /* Màu chữ đậm */
+    font-size: 16px; /* Kích thước chữ tiêu đề */
+    text-transform: uppercase; /* Chuyển chữ thành in hoa */
+}
+
+/* Input field */
+.input-field {
+    margin-bottom: 20px; /* Khoảng cách giữa các input */
+}
+
+/* TextField ghi chú */
+textarea {
+    resize: none; /* Vô hiệu hóa thay đổi kích thước */
+}
+
+/* Footer cố định */
+footer {
+    background-color: #ffffff; /* Nền sáng */
+    border-top: 1px solid #ddd; /* Viền trên */
+    padding: 10px; /* Khoảng cách trong footer */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ trên */
+    min-height: 100px; /* Đặt chiều cao tối thiểu */
+
+}
+
+/* Tổng số tiền */
+footer .row .col-2 {
+    font-size: 18px; /* Chữ to hơn */
+    font-weight: bold; /* Đậm để nổi bật */
+    color: #f44336; /* Màu đỏ nổi bật */
+}
+
+/* Nút quay lại */
+footer .row .col span {
+    display: flex; /* Căn giữa icon và chữ */
+    align-items: center;
+    color: #007bff; /* Màu xanh nút quay lại */
+    cursor: pointer; /* Thêm biểu tượng con trỏ */
+    transition: color 0.3s ease; /* Hiệu ứng hover */
+}
+
+footer .row .col span:hover {
+    color: #0056b3; /* Màu xanh đậm khi hover */
+}
+
+/* Nút xác nhận */
+footer .row .col-4 Button {
+    background-color: #4caf50; /* Màu xanh cho nút xác nhận */
+    color: #ffffff; /* Chữ trắng */
+    font-size: 16px; /* Kích thước chữ lớn hơn */
+    font-weight: bold; /* Chữ đậm */
+    border-radius: 6px; /* Bo góc nhẹ */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng hover */
+}
+
+footer .row .col-4 Button:hover {
+    background-color: #388e3c; /* Màu xanh đậm hơn khi hover */
+    transform: scale(1.05); /* Phóng to nhẹ */
+}
+
+/* Phần kiểm tra đơn hàng */
+.container.bg-light.my-3.rounded-3.p-3 div {
+    margin-bottom: 10px; /* Khoảng cách giữa các mục */
+}
+
+.container.bg-light.my-3.rounded-3.p-3 div span {
+    font-size: 14px; /* Chữ nhỏ hơn để cân đối */
+    color: #333; /* Màu chữ trung tính */
+}
+
+/* Ghi chú */
+textarea {
+    padding: 10px; /* Khoảng cách nội dung */
+    border: 1px solid #ddd; /* Viền nhẹ */
+    border-radius: 4px; /* Bo góc */
+    font-size: 14px; /* Cỡ chữ phù hợp */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    footer {
+        position: static; /* Để footer không bị cố định trên màn hình nhỏ */
+    }
+    form {
+        margin: 10px; /* Giảm khoảng cách bên ngoài */
+    }
+}

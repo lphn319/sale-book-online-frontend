@@ -1,17 +1,20 @@
 import React from "react";
+import "./Banner.css"; // Đảm bảo bạn tạo file Banner.css trong cùng thư mục
+import bannerImage from '../../../assets/images/banner.png'; // Import hình ảnh
 
-function Banner(){
+function Banner() {
     return (
-        <div className="p-2 mb-4 bg-dark">
-            <div className="container-fluid py-5 text-white d-flex justify-content-center align-items-center">
-                <div>
+        <div className="banner-container" style={{ backgroundImage: `url(${bannerImage})` }}>
+            <div className="banner-content">
+                <div className="text-content">
                     <h5 className="display-5 fw-bold">
-                        Giá của sách không quan trọng bằng <br/> việc bạn phải trả giá nếu không đọc sách
+                        Giá của sách không quan trọng bằng <br /> việc bạn phải trả giá nếu không đọc sách
                     </h5>
-                    <button className="btn btn-primary btn-lg text-white float-end">Khám phá sách tại BaConBo.vn</button>
+                    <button className="btn btn-primary btn-lg">Let's enjoy with us</button>
                 </div>
             </div>
         </div>
     );
 }
+
 export default Banner;

@@ -10,6 +10,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {DeleteOutlineOutlined} from "@mui/icons-material";
 import {DataTable} from "../../../../utils/DataTable";
 
+
 interface SachTableProps{
     setOption: any;
     handleOpenModal: any;
@@ -91,41 +92,41 @@ export const SachTable: React.FC<SachTableProps> = (props) => {
     };
 
     const columns: GridColDef[] = [
-        {field: "maSach", headerName: "ID", width: 80},
+        { field: "maSach", headerName: "ID", flex: 0.5 }, // Cột ID có chiều rộng nhỏ hơn
         {
             field: "duLieuAnh",
             headerName: "Ảnh",
-            width: 100,
+            flex: 1,
             renderCell: (params) => {
                 return <img src={params.value} alt='' width={70} />;
             },
         },
-        { field: "tenSach", headerName: "TÊN SÁCH", width: 350 },
-        { field: "soLuong", headerName: "SỐ LƯỢNG", width: 100 },
+        { field: "tenSach", headerName: "TÊN SÁCH", flex: 2 }, // Tên sách có chiều rộng lớn hơn
+        { field: "soLuong", headerName: "SỐ LƯỢNG", flex: 1 },
         {
             field: "giaBan",
             headerName: "GIÁ BÁN",
-            width: 120,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <span>
-						{Number.parseInt(params.value).toLocaleString("vi-vn")}đ
-					</span>
+                    {Number.parseInt(params.value).toLocaleString("vi-vn")}đ
+                </span>
                 );
             },
         },
-        { field: "tenTacGia", headerName: "TÁC GIẢ", width: 150 },
+        { field: "tenTacGia", headerName: "TÁC GIẢ", flex: 1 },
         {
             field: "action",
             headerName: "HÀNH ĐỘNG",
-            width: 200,
+            flex: 1.5,
             type: "actions",
             renderCell: (item) => {
                 return (
                     <div>
                         <Tooltip title={"Chỉnh sửa"}>
                             <IconButton
-                                color='primary'
+                                color="primary"
                                 onClick={() => {
                                     props.setOption("cap-nhat");
                                     props.setId(item.id);
@@ -137,7 +138,7 @@ export const SachTable: React.FC<SachTableProps> = (props) => {
                         </Tooltip>
                         <Tooltip title={"Xoá"}>
                             <IconButton
-                                color='error'
+                                color="error"
                                 onClick={() => handleXoaSach(item.id)}
                             >
                                 <DeleteOutlineOutlined />
@@ -148,6 +149,7 @@ export const SachTable: React.FC<SachTableProps> = (props) => {
             },
         },
     ];
+
     if (loading) {
         return (
             <Box

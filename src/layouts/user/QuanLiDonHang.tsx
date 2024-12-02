@@ -3,28 +3,34 @@ import { format } from "date-fns";
 import { Button, Chip, Typography, Box, CircularProgress } from "@mui/material";
 import DonHangModel from "../../models/DonHangModel";
 import { layToanBoDonHangTheoMaNguoiDung } from "../../api/DonHangApi";
-import { useNavigate } from "react-router-dom"; // Thêm useNavigate
-
-interface QuanLyDonHangPageProps {
+import { useNavigate } from "react-router-dom";
+import "../user/QuanLiDonHang.css"
+interface QuanLiDonHangPageProps {
     maNguoiDung: number ;
 }
 
-const QuanLyDonHangPage: React.FC<QuanLyDonHangPageProps> = ({ maNguoiDung }) => {
+const QuanLiDonHangPage: React.FC<QuanLiDonHangPageProps> = ({ maNguoiDung }) => {
     const [orders, setOrders] = useState<DonHangModel[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null); // Thêm state cho lỗi
     const navigate = useNavigate(); // Khởi tạo useNavigate
 
+
+
     useEffect(() => {
+        console.log("Mã người dùng:", maNguoiDung);
         if (!maNguoiDung) {
+             // In giá trị maNguoiDung để kiểm tra
             setError("Không tìm thấy mã người dùng.");
             setLoading(false);
             return;
         }
         async function fetchOrders() {
+
             setLoading(true);
             try {
                 const fetchedOrders = await layToanBoDonHangTheoMaNguoiDung(maNguoiDung);
+                console.log("Đơn hàng:", fetchedOrders); // In kết quả để kiểm tra
                 setOrders(fetchedOrders);
             } catch (error) {
                 console.error("Lỗi khi tải danh sách đơn hàng:", error);
@@ -71,11 +77,7 @@ const QuanLyDonHangPage: React.FC<QuanLyDonHangPageProps> = ({ maNguoiDung }) =>
                                 }
                                 sx={{ marginTop: 1 }}
                             />
-                            <Box sx={{ marginTop: 2 }}>
-                                <Button variant="outlined" onClick={() => navigate(`/orders/${order.maDonHang}`)}>
-                                    Xem chi tiết
-                                </Button>
-                            </Box>
+
                         </Box>
                     ))}
                 </Box>
@@ -84,4 +86,4 @@ const QuanLyDonHangPage: React.FC<QuanLyDonHangPageProps> = ({ maNguoiDung }) =>
     );
 };
 
-export default QuanLyDonHangPage;
+export default QuanLiDonHangPage;

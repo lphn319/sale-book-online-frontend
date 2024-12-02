@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { checkMatKhau, kiemTraSoDienThoai } from "../../utils/Validation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import "../dathang/form.css"
 
 interface ThanhToanPageProps {
     setIsCheckout: any;

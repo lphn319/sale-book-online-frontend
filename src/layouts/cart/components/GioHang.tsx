@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { isToken } from "../../../utils/JwtService";
 import { useChiTietGioHang } from "../../../utils/ChiTietGioHangContext";
 import DatHangPage from "../../dathang/DatHangPage";
+import "../components/GioHang.css"
 
 interface DanhSachGioHangProps {}
 

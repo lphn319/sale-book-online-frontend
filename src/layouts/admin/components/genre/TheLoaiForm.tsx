@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { lay1TheLoai } from "../../../../api/TheLoaiAPI";
 import TheLoaiModel from "../../../../models/TheLoaiModel";
 import { isTokenExpired } from "../../../../utils/JwtService";
-import "../../../../utils/style/TheLoai.css"; // Import the CSS
 
 interface TheLoaiFormProps {
     option: string;

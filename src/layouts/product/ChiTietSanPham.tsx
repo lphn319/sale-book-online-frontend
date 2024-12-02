@@ -273,10 +273,10 @@ const ChiTietSanPham: React.FC = () => {
                                 }
                             </div>
                             <div className="d-grid gap-2">
+                                {/*<button type="button" className="btn btn-danger mt-3"*/}
+                                {/*        onClick={handleMuaNgay}*/}
+                                {/*        style={{width: '100%'}}>Mua ngay</button>*/}
                                 <button type="button" className="btn btn-danger mt-3"
-                                        onClick={handleMuaNgay}
-                                        style={{width: '100%'}}>Mua ngay</button>
-                                <button type="button" className="btn btn-outline-secondary mt-2"
                                         onClick={() => handleThemVaoGioHang(sach)}
                                         style={{width: '100%'}}>Thêm vào giỏ hàng</button>
                                 <button type="button" className="btn btn-outline-secondary mt-2"
